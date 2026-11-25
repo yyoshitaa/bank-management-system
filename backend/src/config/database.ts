@@ -1,4 +1,6 @@
-import { Pool, PoolClient } from 'pg';
+import pkg from 'pg';
+const { Pool } = pkg;
+import type { PoolClient } from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -19,4 +21,5 @@ pool.on('error', (err) => {
 export const db = {
   query: (text: string, params?: any[]) => pool.query(text, params),
   getClient: (): Promise<PoolClient> => pool.connect(),
+  end: (): Promise<void> => pool.end(),
 };
